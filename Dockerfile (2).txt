@@ -1,0 +1,10 @@
+from python:3.7
+
+COPY . /docker_model_app
+WORKDIR /docker_model_app
+
+RUN pip install -r requirements.txt
+RUN pip install Flask gunicorn
+
+EXPOSE $PORT
+CMD exec gunicorn --bind 0.0.0.0:$PORT --workers=4 --threads 8 --timeout 0 app:app
